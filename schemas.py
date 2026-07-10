@@ -9,8 +9,8 @@ class UsuarioCreate(BaseModel):
     nombre_usuario: str
     email: EmailStr
     edad: Optional[int] = None
-    ciudad: str | None
-    genero: str | None  # 'Lola' o 'Lalo'
+    ciudad: str | None = None
+    genero: str | None  = None # 'Lola' o 'Lalo'
 
 
 class UsuarioOut(BaseModel):
@@ -19,8 +19,8 @@ class UsuarioOut(BaseModel):
     nombre_usuario: str
     email: str
     edad: Optional[int]
-    ciudad: str | None
-    genero: str | None
+    ciudad: str | None = None
+    genero: str | None = None
     estrellas: int
     monedas: int
     fecha_registro: datetime
@@ -33,10 +33,10 @@ class UsuarioOut(BaseModel):
 
 class DiarioCreate(BaseModel):
     uid: str
-    nota: str | None
-    estado: str | None
-    temperatura: str | None
-    tipo_residuo: str | None
+    nota: str | None = None
+    estado: str | None = None
+    temperatura: str | None = None
+    tipo_residuo: str | None = None
     composta_punos: Optional[int] = None
     lixiviado_cucharadas: Optional[int] = None
 
@@ -45,10 +45,10 @@ class DiarioOut(BaseModel):
     id: int
     uid: str
     fecha: datetime
-    nota: str | None
-    estado: str | None
-    temperatura: str | None
-    tipo_residuo: str | None
+    nota: str | None = None
+    estado: str | None = None
+    temperatura: str | None = None
+    tipo_residuo: str | None = None
 
     class Config:
         from_attributes = True
@@ -62,7 +62,7 @@ class VentaCreate(BaseModel):
     cantidad: int
     precio_unitario: float
     total_ganado: int
-    descripcion: str | None
+    descripcion: str | None = None
 
 
 class VentaOut(BaseModel):
@@ -84,7 +84,7 @@ class RetoCreate(BaseModel):
     reto_id: str
     completado: bool = False
     medicion: Optional[int] = None
-    foto_url: str | None
+    foto_url: str | None = None
     
 class RetoOut(BaseModel):
     id: int
@@ -93,7 +93,7 @@ class RetoOut(BaseModel):
     completado: bool
     fecha_completado: Optional[datetime]
     medicion: Optional[int]
-    foto_url: str | None
+    foto_url: str | None = None
     
     class Config: 
         from_attributes = True
@@ -105,14 +105,14 @@ class LogroCreate(BaseModel):
     uid: str
     tipo: str
     nombre: str
-    descripcion: str | None
+    descripcion: str | None = None
     
 class LogroOut(BaseModel):
     id: int
     uid: str
     tipo: str
     nombre: str
-    descripcion: str | None
+    descripcion: str | None = None
     fecha_desbloqueo: datetime
     
     class Config:
@@ -123,13 +123,13 @@ class LogroOut(BaseModel):
 class RecordatorioCreate(BaseModel):
     uid: str
     titulo: str
-    mensaje: str | None
+    mensaje: str | None = None
     
 class RecordatorioOut(BaseModel):
     id: int
     uid: str
     titulo: str
-    mensaje: str | None
+    mensaje: str | None = None
     fecha: datetime
     visto: bool
     
@@ -142,10 +142,10 @@ class CapacitacionCreate(BaseModel):
     uid: str
     nombre_capacitado: str
     edad_capacitado: Optional[int] = None
-    municipio: str | None
-    estado: str | None
-    pais: str | None
-    invitado_por: str | None
+    municipio: str | None = None
+    estado: str | None = None
+    pais: str | None = None
+    invitado_por: str | None = None
     monedas_ganadas: int = 50
     
 class CapacitacionOut(BaseModel):
@@ -153,10 +153,10 @@ class CapacitacionOut(BaseModel):
     uid: str
     nombre_capacitado: str
     edad_capacitado: Optional[int]
-    municipio: str | None
-    estado: str | None
-    pais: str | None
-    invitado_por: str | None
+    municipio: str | None = None
+    estado: str | None = None
+    pais: str | None = None
+    invitado_por: str | None  = None
     fecha: datetime
     monedas_ganadas: int
     
