@@ -11,7 +11,7 @@ if DATABASE_URL:
     if DATABASE_URL.startswith("postgres://"):
         DATABASE_URL = DATABASE_URL.replace(
             "postgres://",
-            "postgresql+psycopg2://",
+            "postgresql://",
             1
         )
 else:
@@ -25,7 +25,7 @@ else:
     # Si existe al menos el usuario de PostgreSQL se utiliza PostgreSQL local.
     if DB_USER:
         DATABASE_URL = (
-            f"postgresql+psycopg2://"
+            f"postgresql://"
             f"{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
         )
     else:
