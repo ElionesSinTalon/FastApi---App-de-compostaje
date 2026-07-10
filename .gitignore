@@ -1,0 +1,32 @@
+# Entornos virtuales
+venv/
+.venv/
+
+# Variables de entorno
+.env
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+
+# Bases de datos SQLite
+*.db
+
+.vscode/
+
+# Archivos generados
+build/
+dist/
+*.egg-info/
+
+# Cachés
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Cobertura
+.coverage
+htmlcov/
+
+# macOS
+.DS_Store
