@@ -41,8 +41,7 @@ def crear_usuario(usuario: UsuarioCreate):
     db = SessionLocal()
     try:
         nuevo = models.Usuario(
-            uid=str(uuid.uuid4()),
-            **usuario.model_dump(),
+            **usuario.model_dump()
         )
         db.add(nuevo)
         db.commit()

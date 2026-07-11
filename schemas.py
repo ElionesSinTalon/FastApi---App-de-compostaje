@@ -1,14 +1,16 @@
 from datetime import datetime
-from typing import Optional
+from tokenize import String
+from typing import List, Optional
 from pydantic import BaseModel, EmailStr
 
 # ---------- Usuario ----------
 
 class UsuarioCreate(BaseModel):
+    uid: str
     nombre: str
     nombre_usuario: str
     email: EmailStr
-    edad: Optional[int] = None
+    edad: int | None = None
     ciudad: str | None = None
     genero: str | None  = None # 'Lola' o 'Lalo'
 
@@ -18,7 +20,7 @@ class UsuarioOut(BaseModel):
     nombre: str
     nombre_usuario: str
     email: str
-    edad: Optional[int]
+    edad: int | None = None
     ciudad: str | None = None
     genero: str | None = None
     estrellas: int
@@ -37,8 +39,9 @@ class DiarioCreate(BaseModel):
     estado: str | None = None
     temperatura: str | None = None
     tipo_residuo: str | None = None
-    composta_punos: Optional[int] = None
-    lixiviado_cucharadas: Optional[int] = None
+    composta_punos: int | None = None
+    lixiviado_cucharadas: int | None = None
+    fotos: List[str] | None = None 
 
 
 class DiarioOut(BaseModel):
@@ -49,6 +52,9 @@ class DiarioOut(BaseModel):
     estado: str | None = None
     temperatura: str | None = None
     tipo_residuo: str | None = None
+    compostaPunos: int | None = None    
+    lixiviadoCucharadas: int | None = None    
+    fotos: List[str] | None = None    
 
     class Config:
         from_attributes = True
@@ -73,6 +79,7 @@ class VentaOut(BaseModel):
     precio_unitario: float
     total_ganado: int
     fecha: datetime
+    descripcion: str | None = None
 
     class Config:
         from_attributes = True
