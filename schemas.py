@@ -52,8 +52,8 @@ class DiarioOut(BaseModel):
     estado: str | None = None
     temperatura: str | None = None
     tipo_residuo: str | None = None
-    compostaPunos: int | None = None    
-    lixiviadoCucharadas: int | None = None    
+    composta_punos: int | None = None    
+    lixiviado_cucharadas: int | None = None    
     fotos: List[str] | None = None    
 
     class Config:
