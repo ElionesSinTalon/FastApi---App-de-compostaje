@@ -1,21 +1,56 @@
 from datetime import datetime
-from tokenize import String
-from typing import List, Optional
-from pydantic import BaseModel, EmailStr
 
-# ---------- Usuario ----------
+from pydantic import (
+    BaseModel,
+    ConfigDict,
+    EmailStr,
+    Field,
+)
+
+# USUARIO
 
 class UsuarioCreate(BaseModel):
-    uid: str
-    nombre: str
-    nombre_usuario: str
+    uid: str = Field(
+        ...,
+        min_length=1,
+        max_length=128,
+        description="Identificador único del usuario",
+    )
+
+    nombre: str = Field(
+        ...,
+        min_length=2,
+        max_length=150,
+    )
+
+    nombre_usuario: str = Field(
+        ...,
+        min_length=3,
+        max_length=50,
+    )
+
     email: EmailStr
-    edad: int | None = None
-    ciudad: str | None = None
-    genero: str | None  = None # 'Lola' o 'Lalo'
+
+    edad: int | None = Field(
+        default=None,
+        ge=1,
+        le=120,
+    )
+
+    ciudad: str | None = Field(
+        default=None,
+        max_length=100,
+    )
+
+    genero: str | None = Field(
+        default=None,
+        max_length=10,
+    )
 
 
 class UsuarioOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     uid: str
     nombre: str
     nombre_usuario: str
@@ -27,51 +62,103 @@ class UsuarioOut(BaseModel):
     monedas: int
     fecha_registro: datetime
 
-    class Config:
-        from_attributes = True  
-
-
-# ---------- Diario ----------
+# DIARIO
 
 class DiarioCreate(BaseModel):
+    uid: str = Field(
+        ...,
+        min_length=1,
+        max_length=36,
+    )
+
+    nota: str | None = Field(
+        default=None,
+        max_length=500,
+    )
+
+    estado: str | None = Field(
+        default=None,
+        max_length=10,
+    )
+
+    temperatura: str | None = Field(
+        default=None,
+        max_length=20,
+    )
+
+    tipo_residuo: str | None = Field(
+        default=None,
+        max_length=20,
+    )
+
+    composta_punos: int | None = Field(
+        default=None,
+        ge=0,
+    )
+
+    lixiviado_cucharadas: int | None = Field(
+        default=None,
+        ge=0,
+    )
+
+    fotos: list[str] = Field(
+        default_factory=list,
+    )
+
+
+class DiarioOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
     uid: str
+    fecha: datetime
     nota: str | None = None
     estado: str | None = None
     temperatura: str | None = None
     tipo_residuo: str | None = None
     composta_punos: int | None = None
     lixiviado_cucharadas: int | None = None
-    fotos: List[str] | None = None 
+    fotos: list[str] = Field(default_factory=list)
 
-
-class DiarioOut(BaseModel):
-    id: int
-    uid: str
-    fecha: datetime
-    nota: str | None = None
-    estado: str | None = None
-    temperatura: str | None = None
-    tipo_residuo: str | None = None
-    composta_punos: int | None = None    
-    lixiviado_cucharadas: int | None = None    
-    fotos: List[str] | None = None    
-
-    class Config:
-        from_attributes = True
-
-
-# ---------- Venta ----------
+# VENTA
 
 class VentaCreate(BaseModel):
-    uid: str
-    producto: str
-    cantidad: int
-    precio_unitario: float
-    total_ganado: int
-    descripcion: str | None = None
+    uid: str = Field(
+        ...,
+        min_length=1,
+        max_length=36,
+    )
+
+    producto: str = Field(
+        ...,
+        min_length=1,
+        max_length=50,
+    )
+
+    cantidad: int = Field(
+        ...,
+        gt=0,
+    )
+
+    precio_unitario: float = Field(
+        ...,
+        ge=0,
+    )
+
+    total_ganado: int = Field(
+        ...,
+        ge=0,
+    )
+
+    descripcion: str | None = Field(
+        default=None,
+        max_length=255,
+    )
 
 
 class VentaOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     uid: str
     producto: str
@@ -81,91 +168,164 @@ class VentaOut(BaseModel):
     fecha: datetime
     descripcion: str | None = None
 
-    class Config:
-        from_attributes = True
-
-#---------- Reto ----------
+# RETO
 
 class RetoCreate(BaseModel):
-    uid: str
-    reto_id: str
+    uid: str = Field(
+        ...,
+        min_length=1,
+        max_length=36,
+    )
+
+    reto_id: str = Field(
+        ...,
+        min_length=1,
+        max_length=50,
+    )
+
     completado: bool = False
-    medicion: Optional[int] = None
-    foto_url: str | None = None
-    
+
+    medicion: int | None = Field(
+        default=None,
+        ge=0,
+    )
+
+    foto_url: str | None = Field(
+        default=None,
+        max_length=500,
+    )
+
+
 class RetoOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     uid: str
     reto_id: str
     completado: bool
-    fecha_completado: Optional[datetime]
-    medicion: Optional[int]
+    fecha_completado: datetime | None = None
+    medicion: int | None = None
     foto_url: str | None = None
-    
-    class Config: 
-        from_attributes = True
-        
-#---------- Logro ----------
+
+# LOGRO
 
 class LogroCreate(BaseModel):
-    id: int
-    uid: str
-    tipo: str
-    nombre: str
-    descripcion: str | None = None
-    
+    uid: str = Field(
+        ...,
+        min_length=1,
+        max_length=36,
+    )
+
+    tipo: str = Field(
+        ...,
+        min_length=1,
+        max_length=50,
+    )
+
+    nombre: str = Field(
+        ...,
+        min_length=1,
+        max_length=100,
+    )
+
+    descripcion: str | None = Field(
+        default=None,
+        max_length=255,
+    )
+
+
 class LogroOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     uid: str
     tipo: str
     nombre: str
     descripcion: str | None = None
     fecha_desbloqueo: datetime
-    
-    class Config:
-        from_attributes = True
-        
-#---------- Recordatorio ----------
+
+# RECORDATORIO
 
 class RecordatorioCreate(BaseModel):
-    uid: str
-    titulo: str
-    mensaje: str | None = None
-    
+    uid: str = Field(
+        ...,
+        min_length=1,
+        max_length=36,
+    )
+
+    titulo: str = Field(
+        ...,
+        min_length=1,
+        max_length=150,
+    )
+
+    mensaje: str | None = Field(
+        default=None,
+        max_length=500,
+    )
+
+
 class RecordatorioOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     uid: str
     titulo: str
     mensaje: str | None = None
     fecha: datetime
     visto: bool
-    
-    class Config:
-        from_attributes = True
-        
-#------------ Capacitacion --------
+
+# CAPACITACION
 
 class CapacitacionCreate(BaseModel):
+    uid: str = Field(
+        ...,
+        min_length=1,
+        max_length=36,
+    )
+
+    nombre_capacitado: str = Field(
+        ...,
+        min_length=2,
+        max_length=150,
+    )
+
+    edad_capacitado: int | None = Field(
+        default=None,
+        ge=1,
+        le=120,
+    )
+
+    municipio: str | None = Field(
+        default=None,
+        max_length=100,
+    )
+
+    estado: str | None = Field(
+        default=None,
+        max_length=100,
+    )
+
+    pais: str | None = Field(
+        default=None,
+        max_length=100,
+    )
+
+    invitado_por: str | None = Field(
+        default=None,
+        max_length=150,
+    )
+
+class CapacitacionOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
     uid: str
     nombre_capacitado: str
-    edad_capacitado: Optional[int] = None
+    edad_capacitado: int | None = None
     municipio: str | None = None
     estado: str | None = None
     pais: str | None = None
     invitado_por: str | None = None
-    monedas_ganadas: int = 50
-    
-class CapacitacionOut(BaseModel):
-    id: int
-    uid: str
-    nombre_capacitado: str
-    edad_capacitado: Optional[int]
-    municipio: str | None = None
-    estado: str | None = None
-    pais: str | None = None
-    invitado_por: str | None  = None
     fecha: datetime
     monedas_ganadas: int
-    
-    class Config:
-        from_attributes = True

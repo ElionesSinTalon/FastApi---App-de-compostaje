@@ -23,8 +23,8 @@ class Usuario(Base):
     """Tabla padre — tabla maestra del sistema."""
     __tablename__ = "usuarios"
 
-    # String(36) porque uid viene de un proveedor de auth tipo Firebase (UUID).
-    uid: Mapped[str] = mapped_column(String(36), primary_key=True)
+    # String(128) porque uid viene de un proveedor de auth tipo Firebase (UUID).
+    uid: Mapped[str] = mapped_column(String(128), primary_key=True)
 
     nombre: Mapped[str] = mapped_column(String(150), nullable=False)
     nombre_usuario: Mapped[str] = mapped_column(String(50), unique=True, nullable=False)
