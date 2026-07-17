@@ -59,7 +59,7 @@ class Diario(Base):
     __tablename__ = "diario"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    uid: Mapped[str] = mapped_column(String(36), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
+    uid: Mapped[str] = mapped_column(String(128), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
 
     fecha: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     nota: Mapped[str] = mapped_column(String(500), nullable=True)
@@ -81,7 +81,7 @@ class Venta(Base):
     __tablename__ = "ventas"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    uid: Mapped[str] = mapped_column(String(36), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
+    uid: Mapped[str] = mapped_column(String(128), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
 
     producto: Mapped[str] = mapped_column(String(50), nullable=False)  # 'lombrices', 'atomizador', 'humus'
     cantidad: Mapped[int] = mapped_column(Integer, nullable=False)
@@ -101,7 +101,7 @@ class Reto(Base):
     __tablename__ = "retos"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    uid: Mapped[str] = mapped_column(String(36), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
+    uid: Mapped[str] = mapped_column(String(128), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
 
     reto_id: Mapped[str] = mapped_column(String(50), nullable=False)  # 'reto_1', 'reto_humus', etc.
     completado: Mapped[bool] = mapped_column(Boolean, default=False)
@@ -120,7 +120,7 @@ class Logro(Base):
     __tablename__ = "logros"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    uid: Mapped[str] = mapped_column(String(36), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
+    uid: Mapped[str] = mapped_column(String(128), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
 
     tipo: Mapped[str] = mapped_column(String(50), nullable=False)  # 'clasificador', 'alimentador', etc.
     fecha_desbloqueo: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
@@ -138,7 +138,7 @@ class Recordatorio(Base):
     __tablename__ = "recordatorios"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    uid: Mapped[str] = mapped_column(String(36), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
+    uid: Mapped[str] = mapped_column(String(128), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
 
     titulo: Mapped[str] = mapped_column(String(150), nullable=False)
     mensaje: Mapped[str] = mapped_column(String(500), nullable=True)
@@ -156,7 +156,7 @@ class Capacitacion(Base):
     __tablename__ = "capacitaciones"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    uid: Mapped[str] = mapped_column(String(36), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
+    uid: Mapped[str] = mapped_column(String(128), ForeignKey("usuarios.uid", ondelete="CASCADE"), nullable=False)
 
     nombre_capacitado: Mapped[str] = mapped_column(String(150), nullable=False)
     edad_capacitado: Mapped[int] = mapped_column(Integer, nullable=True)

@@ -68,7 +68,7 @@ class DiarioCreate(BaseModel):
     uid: str = Field(
         ...,
         min_length=1,
-        max_length=36,
+        max_length=128,
     )
 
     nota: str | None = Field(
@@ -126,7 +126,7 @@ class VentaCreate(BaseModel):
     uid: str = Field(
         ...,
         min_length=1,
-        max_length=36,
+        max_length=128,
     )
 
     producto: str = Field(
@@ -174,7 +174,7 @@ class RetoCreate(BaseModel):
     uid: str = Field(
         ...,
         min_length=1,
-        max_length=36,
+        max_length=128,
     )
 
     reto_id: str = Field(
@@ -213,7 +213,7 @@ class LogroCreate(BaseModel):
     uid: str = Field(
         ...,
         min_length=1,
-        max_length=36,
+        max_length=128,
     )
 
     tipo: str = Field(
@@ -250,7 +250,7 @@ class RecordatorioCreate(BaseModel):
     uid: str = Field(
         ...,
         min_length=1,
-        max_length=36,
+        max_length=128,
     )
 
     titulo: str = Field(
@@ -281,7 +281,7 @@ class CapacitacionCreate(BaseModel):
     uid: str = Field(
         ...,
         min_length=1,
-        max_length=36,
+        max_length=128,
     )
 
     nombre_capacitado: str = Field(

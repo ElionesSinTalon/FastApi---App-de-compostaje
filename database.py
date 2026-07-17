@@ -4,33 +4,32 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 
 #----- Configuración de la base de datos
-DATABASE_URL = os.getenv("DATABASE_URL")
 
-if DATABASE_URL:
-    # Railway puede proporcionar una URL con el esquema "postgres://"
-    if DATABASE_URL.startswith("postgres://"):
-        DATABASE_URL = DATABASE_URL.replace(
-            "postgres://",
-            "postgresql+psycopg2://",
-            1
-        )
-else:
-    # Configuración para desarrollo local
-    DB_USER = os.getenv("DB_USER", "postgres")
-    DB_PASSWORD = os.getenv("DB_PASSWORD", "tu_password")
-    DB_HOST = os.getenv("DB_HOST", "localhost")
-    DB_PORT = os.getenv("DB_PORT", "5432")
-    DB_NAME = os.getenv("DB_NAME", "compostaje_db")
+def get_database_url() -> str:
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        # Railway puede proporcionar una URL con el esquema "postgres://"
+        if database_url.startswith("postgres://"):
+            return database_url.replace("postgres://", "postgresql+psycopg2://", 1)
+        return database_url
 
-    # Si existe al menos el usuario de PostgreSQL se utiliza PostgreSQL local.
-    if DB_USER:
-        DATABASE_URL = (
+    use_postgres = os.getenv("USE_POSTGRES", "").strip().lower() in {"1", "true", "yes", "on"}
+    if use_postgres:
+        db_user = os.getenv("DB_USER", "postgres")
+        db_password = os.getenv("DB_PASSWORD", "tu_password")
+        db_host = os.getenv("DB_HOST", "localhost")
+        db_port = os.getenv("DB_PORT", "5432")
+        db_name = os.getenv("DB_NAME", "compostaje_db")
+        return (
             f"postgresql+psycopg2://"
-            f"{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+            f"{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
         )
-    else:
-        # Respaldo para pruebas locales
-        DATABASE_URL = "sqlite:///./compostaje.db"
+
+    # Respaldo para pruebas locales
+    return "sqlite:///./compostaje.db"
+
+
+DATABASE_URL = get_database_url()
 
 
 #----- Engine

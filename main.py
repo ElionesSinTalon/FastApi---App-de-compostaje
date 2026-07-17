@@ -1,4 +1,4 @@
-import uuid
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from sqlalchemy.exc import IntegrityError
@@ -15,10 +15,20 @@ from schemas import (
     CapacitacionCreate, CapacitacionOut,
 )
 
-app = FastAPI(title="API - App de Compostaje", version="1.0")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
 
-# Crea las tablas automáticamente al levantar el servidor (si no existen).
-Base.metadata.create_all(bind=engine)
+
+app = FastAPI(title="API - App de Compostaje", version="1.0", lifespan=lifespan)
+
+
+def init_db():
+    try:
+        Base.metadata.create_all(bind=engine)
+    except Exception as exc:
+        print(f"Advertencia: no se pudo inicializar la base de datos: {exc}")
 
 
 def get_db():
